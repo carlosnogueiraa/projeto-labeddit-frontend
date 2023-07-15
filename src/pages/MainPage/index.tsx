@@ -20,18 +20,23 @@ const schema = yup.object({
         .required('A senha é obrigatória')
 }).required()
 
-function Main() {
+function MainPage() {
     const [isErrorInput, setIsErrorInput] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [showPassword, setShowPassword] = useState<string>('password')
     const [showError, setShowError] = useState<string>('')
     const navigate = useNavigate()
+
     const handleTogglePassword = () => {
         if (showPassword === 'text') {
             setShowPassword('password')
         } else {
             setShowPassword('text')
         }
+    }
+
+    const handleCreateAccount = () => {
+        navigate('/signup')
     }
 
     const {
@@ -114,10 +119,10 @@ function Main() {
                 </form>
             </main>
             <footer>
-                <button>Crie uma conta!</button>
+                <button onClick={handleCreateAccount}>Crie uma conta!</button>
             </footer>
         </Container>
     )
 }
 
-export default Main
+export default MainPage

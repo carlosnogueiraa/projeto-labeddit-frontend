@@ -4,12 +4,13 @@ import OutPostView from "../pages/OutPostView";
 import ErrorPage from "../pages/Error/Error";
 import CommentsView from "../pages/OutPostView/commentsView";
 import PostView from "../pages/OutPostView/PostView";
-import Main from "../pages/Main/Main";
+import MainPage from "../pages/MainPage";
+import SignupPage from "../pages/SignupPage";
 
 const Router = createBrowserRouter([
     {
         path: '/',
-        element: <Main />,
+        element: <MainPage />,
         errorElement: <ErrorPage />
     },
     {
@@ -26,6 +27,11 @@ const Router = createBrowserRouter([
                 element: <CommentsView />
             }
         ]
+    },
+    {
+        path: '/signup',
+        element: <SignupPage />,
+        errorElement: <ErrorPage />,
     }
 ]) 
 

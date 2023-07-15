@@ -107,7 +107,7 @@ export const Container = styled.div<containerProps>`
         width: 22rem;
         justify-content: center;
         align-items: center;
-        padding: 0.8rem 1.3rem;
+        padding: 14px;
         gap: 0.6rem;
         border-radius: 2.6rem;
 
@@ -128,7 +128,7 @@ export const Container = styled.div<containerProps>`
         background-color: transparent;
         border: none;
         position: absolute;
-        top: 48%;
+        top: 2rem;
         right: 0.8rem;
         transform: translateY(-50%);
     }
@@ -182,7 +182,7 @@ export const Container = styled.div<containerProps>`
                         `
                     : 
                         css`
-                            border: 1px solid black;
+                            border: 1px solid #D5D8DE;
                         `
                     }
 
@@ -210,8 +210,11 @@ export const Container = styled.div<containerProps>`
 
         > footer {
             button {
-                width: 90%;
-                padding: calc(0.8rem / 2) calc(8.3rem / 2);
+                @media (max-width: 388px) {
+                    width: 19.4rem;
+                    padding: calc(1rem / 2) calc(8rem / 2);
+                    margin-top: -25px;
+                }
             }
         }
     }
