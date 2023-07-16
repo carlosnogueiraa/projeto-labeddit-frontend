@@ -34,8 +34,7 @@ export default function PostView() {
             return
         }
 
-        createPost(token, data.content, setIsLoading)
-        getAllPosts(token, dispatch)
+        createPost(token, data.content, dispatch)
 
         reset()
     }
@@ -47,8 +46,7 @@ export default function PostView() {
         }
 
         getAllPosts(token, dispatch)
-        return
-    }, [isLoading])
+    }, [])
 
     return (
         <Container>

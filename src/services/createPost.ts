@@ -1,12 +1,13 @@
+import { Dispatch } from "redux"
 import api from "./api"
+import { getAllPosts } from "./getAllPosts"
 
 export const createPost = async (
     token: string,
     content: string,
-    state: (isLoading: boolean) => void
+    dispatch: Dispatch
 ) => {
     const url = `/posts`
-    state(true)
 
     const headers = {
         Authorization: token
@@ -17,11 +18,10 @@ export const createPost = async (
     }
 
     try {
-        const result = await api.post(url, body, { headers })
+        await api.post(url, body, { headers })
+        getAllPosts(token, dispatch)
     } catch (error) {
         console.error('Erro ao criar post: ', error);
-    } finally {
-        state(false)
     }
 }
 

@@ -36,11 +36,14 @@ export const commentsSlice = createSlice({
             action: PayloadAction<any[]>
         ) => {
             state.comments = action.payload
+        },
+        setLoading: (state, action: PayloadAction<boolean>) => {
+            state.loading = action.payload
         }
     }
 })
 
-export const { setComments } = commentsSlice.actions
+export const { setComments, setLoading } = commentsSlice.actions
 
 export const selectCount = (state: RootState) => state.postSlice
 

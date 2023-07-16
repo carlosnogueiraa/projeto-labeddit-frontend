@@ -19,6 +19,10 @@ const Router = createBrowserRouter([
         errorElement: <ErrorPage />,
         children: [
             {
+                path: '/signup',
+                element: <SignupPage />
+            },
+            {
                 path: 'postView',
                 element: <PostView />
             },
@@ -27,11 +31,6 @@ const Router = createBrowserRouter([
                 element: <CommentsView />
             }
         ]
-    },
-    {
-        path: '/signup',
-        element: <SignupPage />,
-        errorElement: <ErrorPage />,
     }
 ]) 
 

@@ -10,6 +10,16 @@ export const GlobalStyle = createGlobalStyle`
 
         button {
             cursor: pointer;
+
+            &:hover {
+                opacity: 80%;
+                transition: 0.3s;
+            }
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
         }
     }
 `

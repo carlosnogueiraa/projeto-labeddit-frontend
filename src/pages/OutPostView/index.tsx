@@ -7,7 +7,7 @@ import logo from "../../assets/logo.svg"
 export default function OutPostView() {
     const location = useLocation()
     const navigate = useNavigate()
-    const { id } = useParams()
+    const { id } = useParams() as { id: string }
 
     const url = location.pathname
     const postNavigate = (url: string) => {

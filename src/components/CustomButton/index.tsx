@@ -4,7 +4,7 @@ import { Container } from "./styles"
 
 interface propsButton {
     text: string
-    isLoading: boolean
+    isLoading?: boolean
 }
 
 export default function CustomButton({

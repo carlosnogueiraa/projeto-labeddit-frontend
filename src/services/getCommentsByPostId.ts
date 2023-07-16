@@ -8,6 +8,7 @@ export const getCommentsByPostId = async (
     dispatch: Dispatch
 ) => {
     const url = `/comments/${postId}`
+
     const headers = {
         Authorization: token
     }
@@ -20,5 +21,6 @@ export const getCommentsByPostId = async (
         return comments
     } catch (error) {
         console.error('Erro ao recuperar os comentários: ', error);
+        throw Error
     }
 }

@@ -1,128 +1,124 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from "@hookform/resolvers/yup";
-import { key } from '../../services/createPost';
 import { Container } from './styles';
 import React, { useEffect, useState } from 'react';
 import * as yup from 'yup';
-import { IoMdEye, IoMdEyeOff } from "react-icons/io"
 import api from '../../services/api';
 import CustomButton from '../../components/CustomButton';
 import logo from "../../assets/logo.svg"
+import { toast } from 'react-toastify';
 
-const schema = yup.object({
-    email: yup
-        .string()
-        .required('O email é obrigatório')
-        .email('O email deve ser válido'),
-    password: yup
-        .string()
-        .required('A senha é obrigatória')
-}).required()
 
-function MainPage() {
-    const [isErrorInput, setIsErrorInput] = useState<boolean>(false)
-    const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [showPassword, setShowPassword] = useState<string>('password')
-    const [showError, setShowError] = useState<string>('')
-    const navigate = useNavigate()
-
-    const handleTogglePassword = () => {
-        if (showPassword === 'text') {
-            setShowPassword('password')
-        } else {
-            setShowPassword('text')
-        }
+function SignupPage() {
+    interface bodyAPI {
+        name: string
+        email: string
+        password: string
+        terms: string
     }
 
-    const handleCreateAccount = () => {
-        navigate('/signup')
-    }
+    const schema = yup.object({
+        name: yup
+            .string()
+            .required('O nome é obrigatório'),
+        email: yup
+            .string()
+            .required('O email é obrigatório')
+            .email('O email deve ser válido'),
+        password: yup
+            .string()
+            .required('A senha é obrigatória'),
+        terms: yup
+            .string()
+            .required()
+            .oneOf(['true'], 'Você deve aceitar os termos')
+    }).required()
 
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors }
     } = useForm({
         resolver: yupResolver(schema)
     })
 
-    useEffect(() => {
-        if (Object.keys(errors).length > 0) {
-            setIsErrorInput(true)
-        } else {
-            setIsErrorInput(false)
+    const onSubmit = async ({ name, email, password, terms }: bodyAPI) => {
+        const body = {
+            name,
+            email,
+            password,
+            terms: terms ? 'accepted' : ''
         }
-    }, [errors])
-
-    interface login {
-        email: string
-        password: string
-    }
-
-    const onSubmit = async (data: login) => {
-        setIsLoading(true)
-
-        const { email, password } = data
 
         try {
-            const result = await api
-                .post('/users/login', { email, password })
-            const token = result.data.token
-
-            localStorage.setItem(key, token)
-            navigate('/postView')
+            await api.post('/users/signup', body)
+            toast.success('Usuário atualizado com sucesso!')
+            reset()
         } catch (error) {
-            const errorMsg = (error as any).response?.data?.error
-            setShowError(errorMsg)
-        } finally {
-            setIsLoading(false)
+            console.error('Erro ao criar a conta do usuário: ', error)
         }
     }
 
     return (
-        <Container isErrorInput={isErrorInput}>
+        <Container isErrorInput={false}>
             <header>
-                <div>
-                    <img src={logo} alt="Logo LabEddit" />
-                </div>
-                <main>
-                    <h1>LabEddit</h1>
-                </main>
-                <footer>
-                    <p>O projeto de rede social da Labenu</p>
-                </footer>
+                <h2>
+                    Olá, boas vindas ao <br /> LabEddit ;)
+                </h2>
             </header>
             <main>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <input {...register('email')} placeholder='E-mail' />
-                    <p>{errors.email?.message}</p>
-
                     <label>
-                        <input
-                            {...register('password')}
-                            placeholder='Senha'
-                            type={showPassword}
-                        />
-                        <button
-                            type='button'
-                            onClick={handleTogglePassword}
-                            className='showPassword'
-                        >
-                            {showPassword === 'password' ? <IoMdEyeOff /> : <IoMdEye />}
-                        </button>
-                        <p>{errors.password?.message}</p>
-                        <p>{showError}</p>
+                        <div>
+                            <input 
+                            {...register('name')} 
+                            placeholder='Apelido' 
+                            />
+                            <p>{errors.name?.message}</p>
+                        </div>
+
+                        <div>
+                            <input
+                                {...register('email')}
+                                placeholder='E-mail'
+                            />
+                            <p>{errors.email?.message}</p>
+                        </div>
+
+                        <div>
+                            <input
+                                {...register('password')}
+                                placeholder='Senha'
+                                type='password'
+                            />
+                            <p>{errors.password?.message}</p>
+                        </div>
                     </label>
-                    <CustomButton text='Continuar' isLoading={isLoading} />
-                    <span></span>
+                    <div>
+                        <span>
+                            Ao continuar, você concorda com o nosso <a className='policy'>Contrato de 
+                            usuário</a> e nossa <a>Política de Privacidade</a>
+                        </span>
+                        <label>
+                            <input
+                                {...register('terms')}
+                                type='checkbox'
+                            />
+                            <span>
+                                Eu concordo em receber emails sobre coisas legais
+                                no Labeddit
+                            </span>
+                        </label>
+                    </div>
+                    <p>{errors.terms?.message}</p>
+                    <CustomButton text='Cadastrar' />
                 </form>
             </main>
-            <footer>
-                <button onClick={handleCreateAccount}>Crie uma conta!</button>
-            </footer>
+            <footer></footer>
         </Container>
     )
 }
 
-export default MainPage
+export default SignupPage

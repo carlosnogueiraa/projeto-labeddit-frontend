@@ -3,20 +3,23 @@ import { useAppSelector } from "../../../app/hooks";
 import { useDispatch } from "react-redux"
 import { useParams } from "react-router-dom";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { getToken } from "../../../constants/getToken";
-import { createComments } from "../../../services/createComments";
+import { createNewComments } from "../../../services/createNewComments";
 import { getCommentsByPostId } from "../../../services/getCommentsByPostId";
-import { getPostById } from "../../../services/getPostById";
 import { Container } from "../PostView/styles"
 import CustomButton from "../../../components/CustomButton";
 import CardList from "../../../components/Card";
+import { key } from "../../../services/createPost";
+import usePostById from "../../../hooks/usePostById";
+import { Post } from "../../../redux/postReducer";
+import CardComments from "../../../components/CardComments";
 
 
 export default function CommentsView() {
-    const postData = useAppSelector((state) => state.postSlice.posts)
     const dispatch = useDispatch()
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const { id } = useParams<{ id: string }>()
+    const { id } = useParams() as { id: string }
+    const token = localStorage.getItem(key) as string
+    const postById = usePostById(id, token)
 
     type Input = {
         content: string
@@ -30,46 +33,22 @@ export default function CommentsView() {
     } = useForm<Input>()
 
     const onSubmit: SubmitHandler<Input> = (data) => {
-        const token = getToken()
-
-        if (!token) {
-            return
-        }
-
-        if (!id) {
-            return
-        }
-
-        if (data.content === '') {
-            return
-        }
-
-        createComments(token, data.content, id, setIsLoading)
-        getCommentsByPostId(id, token, dispatch)
-        getPostById(id, token, dispatch)
+        createNewComments(token, data.content, id, dispatch)
 
         reset()
     }
+
     const commentsData = useAppSelector((state) => state.commentsSlice.comments)
 
     useEffect(() => {
-        const token = getToken()
-
-        if (!token) {
-            return
-        }
-
-        if (!id) {
-            return
-        }
-
         getCommentsByPostId(id, token, dispatch)
-    }, [isLoading])
+        postById.getPostById()
+    }, [])
 
     return (
         <Container>
             <section>
-                {postData.map((post) => (
+                {postById.data.map((post: Post) => (
                     <CardList
                         key={post.id}
                         postId={post.id}
@@ -89,12 +68,13 @@ export default function CommentsView() {
             </form>
             <section>
                 {commentsData.map((comments) => (
-                    <CardList 
+                    <CardComments 
                         key={comments.id}
-                        postId={comments.id}
+                        commentsId={comments.id}
                         userName={comments.owner.name}
                         content={comments.content}
                         likes={comments.likes}
+                        comments={comments.comments}
                     />
                 ))}
             </section>

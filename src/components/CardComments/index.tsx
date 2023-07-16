@@ -1,43 +1,37 @@
-import React from 'react';
-import { useLocation, useNavigate, useParams } from "react-router-dom"
-import { useDispatch } from "react-redux"
-import { likesDislikesPost } from "../../services/createLikesDislikes"
-import { ContainerCard } from "./styles"
-import { getCommentsByPostId } from "../../services/getCommentsByPostId"
+import React, { useEffect, useState } from "react"
+import { useLocation, useParams } from "react-router-dom"
 import { getToken } from "../../constants/getToken"
-import dislikeIcon from "../../assets/dislikeIcon.svg"
+import { useDispatch } from "react-redux"
+import { likesDislikesComments } from "../../services/createLikeInComments"
+import { Container } from "./styles"
 import likeIcon from "../../assets/likeIcon.svg"
+import dislikeIcon from "../../assets/dislikeIcon.svg"
 import commentsIcon from "../../assets/commentsIcon.svg"
 
-export interface propsCard {
-    postId: string
+
+export interface propsCardPost {
+    commentsId: string
     userName: string
     content: string
     likes: number
     comments?: number
 }
 
-export default function CardList({ 
-    postId, 
-    userName, 
-    content, 
-    likes, 
-    comments 
-}: propsCard) {
-    const navigate = useNavigate()
+export default function CardComments({
+    commentsId,
+    userName,
+    content,
+    likes,
+    comments
+}: propsCardPost) {
     const location = useLocation()
+    const url = location.pathname
+    const { id } = useParams() as { id: string }
     const token = getToken() as string
     const dispatch = useDispatch()
-    const url = location.pathname
-
-    const commentsNavigate = (url: string) => {
-        if (url === '/postView') {
-            navigate(`/commentsView/${postId}`)
-        }
-    }
 
     return (
-        <ContainerCard>
+        <Container>
             <header>
                 <h2>Enviado por: {userName}</h2>
             </header>
@@ -48,7 +42,7 @@ export default function CardList({
                 <div>
                     <button
                         onClick={() => {
-                            likesDislikesPost(postId, token, 1, url, dispatch)
+                            likesDislikesComments(commentsId, token, id, 1, dispatch)
                         }}
                     >
                         <img src={likeIcon} alt='Ícone de like' />
@@ -56,7 +50,7 @@ export default function CardList({
                     <span>{likes}</span>
                     <button
                         onClick={() => {
-                            likesDislikesPost(postId, token, 0, url, dispatch)
+                            likesDislikesComments(commentsId, token, id, 0, dispatch)
                         }}
                     >
                         <img src={dislikeIcon} alt='Ícone de dislike' />
@@ -65,20 +59,12 @@ export default function CardList({
                 {url === '/postView' && (
                     <div>
                         <span>{comments}</span>
-                        <button
-                            onClick={() => {
-                                commentsNavigate(url)
-                                if (!token) {
-                                    return
-                                }
-                                getCommentsByPostId(postId, token, dispatch)
-                            }}
-                        >
+                        <button>
                             <img src={commentsIcon} alt='Ícone de comentários' />
                         </button>
                     </div>
                 )}
             </footer>
-        </ContainerCard>
+        </Container>
     )
 }
