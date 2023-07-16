@@ -1,35 +1,29 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import api from "./api";
-import { getAllPosts } from "./getAllPosts";
-import { getPostById } from "./getPostById";
+import { getCommentsByPostId } from "./getCommentsByPostId";
 
 export const likesDislikesComments = async (
-    id: string,
+    commentsId: string,
     token: string,
     postId: string,
-    like: number,
-    endpoint: string,
+    likes: number,
     dispatch: Dispatch
 ) => {
-    const url = `/comments/likes/${id}`
+    const url = `/comments/likes/${commentsId}`
+
     const headers = {
         Authorization: token
     }
 
     const body = {
         postId,
-        like
+        likes
     }
 
     try {
         const result = await api.post(url, body, { headers })
+        getCommentsByPostId(postId, token, dispatch)
         result.data
-
-        if (endpoint === '/postView') {
-            getAllPosts(token, dispatch)
-        } else {
-            getPostById(id, token, dispatch)
-        }
     } catch (error) {
         console.error('Erro ao atualizar o like/dislike: ', error);
     }

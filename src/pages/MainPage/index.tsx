@@ -119,7 +119,14 @@ function MainPage() {
                 </form>
             </main>
             <footer>
-                <button onClick={handleCreateAccount}>Crie uma conta!</button>
+                <button 
+                    onClick={() => {
+                        handleCreateAccount()
+                        }
+                    }
+                >
+                    Crie uma conta!
+                </button>
             </footer>
         </Container>
     )

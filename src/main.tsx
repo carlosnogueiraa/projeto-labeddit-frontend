@@ -1,8 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { Theme } from "./styles/theme";
-import { QueryClientProvider } from "react-query";
-import { request } from "./services/request"
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import { GlobalStyle } from "./styles/global";
 import { RouterProvider } from "react-router-dom";
 import { Router } from "./router/Router";
@@ -14,12 +14,11 @@ const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
     <React.StrictMode>
         <Theme>
-            <QueryClientProvider client={request}>
                 <Provider store={store}>
                     <GlobalStyle />
+                    <ToastContainer />
                     <RouterProvider router={Router} />
                 </Provider>
-            </QueryClientProvider>
         </Theme>
     </React.StrictMode>
 )

@@ -18,10 +18,12 @@ export const createComments = async (
     }
 
     try {
-        const result = await api.post(url, body, { headers })
+        await api.post(url, body, { headers })
     } catch (error) {
         console.error('Erro ao criar post: ', error);
     } finally {
         state(false)
     }
 }
+
+export const key = '@labeddit'
