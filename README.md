@@ -27,7 +27,7 @@
 
 ## Deploy
 
-[Acessar o projeto]()
+[Acessar o projeto](https://projeto-labeddit-frontend-barbosa-a.surge.sh)
 
 ## Link para o Back-end
 
