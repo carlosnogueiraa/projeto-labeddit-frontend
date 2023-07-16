@@ -56,6 +56,7 @@ export default function PostView() {
                     placeholder="Escreva seu post..."
                 />
                 <CustomButton text="Postar" isLoading={isLoading} />
+                <span></span>
             </form>
             <section>
                 {postData.map((post) => (

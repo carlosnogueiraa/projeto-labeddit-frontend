@@ -12,6 +12,13 @@ export const Container = styled.div`
         padding: 1rem;
         gap: 1rem;
 
+        span {
+                margin: 1rem 0 -2rem 0;
+                width: 22rem;
+                height: 0.06rem;
+                background: linear-gradient(to right, #ff6489, #f9b24e), #acacac;
+            }
+
         textarea {
             width: 22rem;
             height: 8rem;

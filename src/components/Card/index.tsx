@@ -53,7 +53,7 @@ export default function CardList({
                     >
                         <img src={likeIcon} alt='Ícone de like' />
                     </button>
-                    <span>{likes}</span>
+                    <span className='likes'>{likes}</span>
                     <button
                         onClick={() => {
                             likesDislikesPost(postId, token, 0, url, dispatch)

@@ -9,6 +9,7 @@ export const ContainerCard = styled.main`
     gap: 1.1rem;
     border-radius: 0.75rem;
     border: 1px solid #e0e0e0;
+    background-color: #FBFBFB;
     justify-content: center;
 
     > header {
@@ -17,7 +18,7 @@ export const ContainerCard = styled.main`
             color: #6f6f6f;
             text-align: start;
             font-family: IBM Plex Sans;
-            font-size: 0.75 rem;
+            font-size: 16px;
             font-style: normal;
             font-weight: 400;
             line-height: normal;
@@ -27,9 +28,10 @@ export const ContainerCard = styled.main`
 
     > main {
         span {
+            position: relative;
             color: #000;
             font-family: IBM Plex Sans;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             font-style: normal;
             font-weight: 400;
             line-height: normal;
@@ -64,8 +66,12 @@ export const ContainerCard = styled.main`
                 font-family: IBM Plex Sans;
                 font-size: 0.5rem;
                 font-style: normal;
-                font-weight: 700;
                 line-height: normal;
+
+            }
+
+            .likes {
+                font-weight: 700;
             }
 
             button {
