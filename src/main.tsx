@@ -14,11 +14,11 @@ const root = ReactDOM.createRoot(document.getElementById("root") as HTMLElement)
 root.render(
     <React.StrictMode>
         <Theme>
-                <Provider store={store}>
-                    <GlobalStyle />
-                    <ToastContainer />
-                    <RouterProvider router={Router} />
-                </Provider>
+            <Provider store={store}>
+                <GlobalStyle />
+                <ToastContainer />
+                <RouterProvider router={Router} />
+            </Provider>
         </Theme>
     </React.StrictMode>
 )

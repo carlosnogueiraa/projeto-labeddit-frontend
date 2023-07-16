@@ -54,7 +54,7 @@ function SignupPage() {
 
         try {
             await api.post('/users/signup', body)
-            toast.success('Usuário atualizado com sucesso!')
+            toast.success('Usuário criado com sucesso!')
             reset()
         } catch (error) {
             console.error('Erro ao criar a conta do usuário: ', error)

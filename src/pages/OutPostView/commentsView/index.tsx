@@ -34,7 +34,6 @@ export default function CommentsView() {
 
     const onSubmit: SubmitHandler<Input> = (data) => {
         createNewComments(token, data.content, id, dispatch)
-
         reset()
     }
 
@@ -71,12 +70,12 @@ export default function CommentsView() {
                     <CardComments 
                         key={comments.id}
                         commentsId={comments.id}
-                        userName={comments.owner.name}
+                        userName={comments.userName}
                         content={comments.content}
                         likes={comments.likes}
-                        comments={comments.comments}
+                        // comments={comments.comments}
                     />
-                ))}
+                    ))}
             </section>
         </Container>
     )

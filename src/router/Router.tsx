@@ -19,7 +19,7 @@ const Router = createBrowserRouter([
         errorElement: <ErrorPage />,
         children: [
             {
-                path: '/signup',
+                path: 'signup',
                 element: <SignupPage />
             },
             {

@@ -17,18 +17,18 @@ const usePostById = (id: string, token: string) => {
         try {
             const result = await api.get(`/posts/${id}`, { headers })
             setData(result.data)
-            setIsLoading(false)
-            console.log(true)
         } catch (error) {
             console.error('Erro ao recuperar os posts: ', error)
+        } finally {
             setIsLoading(false)
-            console.log(true)
         }
+
         return
     }
+
     useEffect(() => {
         getPostById()
-    }, [id, token, isLoading])
+    }, [id, token])
 
     return { isLoading, data, getPostById }
 }

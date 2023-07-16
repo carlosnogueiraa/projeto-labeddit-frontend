@@ -95,13 +95,13 @@ function MainPage() {
             </header>
             <main>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <input {...register('email')} placeholder='E-mail' />
+                    <input {...register('email')} placeholder='E-mail *' />
                     <p>{errors.email?.message}</p>
 
                     <label>
                         <input
                             {...register('password')}
-                            placeholder='Senha'
+                            placeholder='Senha *'
                             type={showPassword}
                         />
                         <button

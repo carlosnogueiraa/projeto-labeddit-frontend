@@ -9,12 +9,12 @@ export interface Comments {
     likes: number
     dislikes: number
     comments: number
+    userName: string
     owner: {
         id: string
         name: string
     }
 }
-
 export interface CommentsState {
     comments: Comments[]
     loading: boolean
